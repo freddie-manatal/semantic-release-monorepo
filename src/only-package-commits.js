@@ -21,6 +21,11 @@ const getPackagePath = async () => {
 };
 
 const withFiles = async commits => {
+  // Handle case where commits is null, undefined, or not an array
+  if (!commits || !Array.isArray(commits) || commits.length === 0) {
+    return [];
+  }
+  
   const limit = pLimit(Number(process.env.SRM_MAX_THREADS) || 500);
   return Promise.all(
     commits.map(commit =>
@@ -33,6 +38,11 @@ const withFiles = async commits => {
 };
 
 const onlyPackageCommits = async commits => {
+  // Handle case where commits is null, undefined, or not an array
+  if (!commits || !Array.isArray(commits) || commits.length === 0) {
+    return [];
+  }
+  
   const packagePath = await getPackagePath();
   debug('Filter commits by package path: "%s"', packagePath);
   const commitsWithFiles = await withFiles(commits);
