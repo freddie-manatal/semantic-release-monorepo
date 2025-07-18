@@ -23,7 +23,11 @@ const getPackagePath = async () => {
 const withFiles = async commits => {
   // Handle case where commits is null, undefined, or not an array
   if (!commits || !Array.isArray(commits) || commits.length === 0) {
-    return [];
+    return {
+      // Return an empty array of commits with no files
+      commits: [],
+      files: []
+    }
   }
   
   const limit = pLimit(Number(process.env.SRM_MAX_THREADS) || 500);
@@ -40,7 +44,11 @@ const withFiles = async commits => {
 const onlyPackageCommits = async commits => {
   // Handle case where commits is null, undefined, or not an array
   if (!commits || !Array.isArray(commits) || commits.length === 0) {
-    return [];
+    return {
+      // Return an empty array of commits with no files
+      commits: [],
+      files: []
+    };
   }
   
   const packagePath = await getPackagePath();
